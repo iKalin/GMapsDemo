@@ -2,14 +2,20 @@
 //  ViewController.swift
 //  GMapsDemo
 //
-//  Created by Gabriel Theodoropoulos on 29/3/15.
+//  Created by Manab Chetia on 13/07/2015.
 //  Copyright (c) 2015 Appcoda. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
+enum TravelModes: Int {
+    case driving
+    case walking
+    case bicycling
+}
 
+
+class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
     @IBOutlet weak var viewMap: GMSMapView!
     @IBOutlet weak var bbFindAddress: UIBarButtonItem!
@@ -23,8 +29,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
     var routePolyline: GMSPolyline!
     var markersArray: Array<GMSMarker> = []
     var waypointsArray: Array<String> = []
-//    var travelMode = TravelModes.driving
+    var travelMode = TravelModes.driving
     
+   
     
 
     override func viewDidLoad() {
@@ -156,10 +163,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
         
         
         let createRouteAction = UIAlertAction(title: "Create Route", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            if let polyline = self.routePolyline {
+                self.clearRoute()
+                self.waypointsArray.removeAll(keepCapacity: false)
+            }
+            
             let origin = (addressAlert.textFields![0] as! UITextField).text as String
             let destination = (addressAlert.textFields![1] as! UITextField).text as String
             
-            self.mapTasks.getDirections(origin, destination: destination, waypoints: nil, travelMode: nil, completionHandler: { (status, success) -> Void in
+            self.mapTasks.getDirections(origin, destination: destination, waypoints: nil, travelMode: self.travelMode, completionHandler: { (status, success) -> Void in
                 if success {
                     self.configureMapAndMarkersForRoute()
                     self.drawRoute()
@@ -183,7 +195,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
     
     
     @IBAction func changeTravelMode(sender: AnyObject) {
-    
+        let actionSheet = UIAlertController(title: "Travel Mode", message: "Select travel mode:", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let drivingModeAction = UIAlertAction(title: "Driving", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            self.travelMode = TravelModes.driving
+            self.recreateRoute()
+        }
+        
+        let walkingModeAction = UIAlertAction(title: "Walking", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            self.travelMode = TravelModes.walking
+            self.recreateRoute()
+        }
+        
+        let bicyclingModeAction = UIAlertAction(title: "Bicycling", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            self.travelMode = TravelModes.bicycling
+            self.recreateRoute()
+        }
+        
+        let closeAction = UIAlertAction(title: "Close", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
+            
+        }
+        
+        actionSheet.addAction(drivingModeAction)
+        actionSheet.addAction(walkingModeAction)
+        actionSheet.addAction(bicyclingModeAction)
+        actionSheet.addAction(closeAction)
+        
+        presentViewController(actionSheet, animated: true, completion: nil)
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -287,7 +325,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
         if let polyline = routePolyline {
             clearRoute()
             
-            mapTasks.getDirections(mapTasks.originAddress, destination: mapTasks.destinationAddress, waypoints: waypointsArray, travelMode: nil, completionHandler: { (status, success) -> Void in
+            mapTasks.getDirections(mapTasks.originAddress, destination: mapTasks.destinationAddress, waypoints: waypointsArray, travelMode: self.travelMode, completionHandler: { (status, success) -> Void in
                 
                 if success {
                     self.configureMapAndMarkersForRoute()
@@ -310,7 +348,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDel
             recreateRoute()
         }
     }
-    
     
     
 }
