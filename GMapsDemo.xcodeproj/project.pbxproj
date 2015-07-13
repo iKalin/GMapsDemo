@@ -28,6 +28,7 @@
 		DF695E4D1B5335C1003CA177 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF695E4C1B5335C1003CA177 /* QuartzCore.framework */; };
 		DF695E4F1B5335CB003CA177 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF695E4E1B5335CB003CA177 /* SystemConfiguration.framework */; };
 		DF695E521B53362F003CA177 /* temp.m in Sources */ = {isa = PBXBuildFile; fileRef = DF695E511B53362F003CA177 /* temp.m */; };
+		DF695E581B537899003CA177 /* MapTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF695E571B537899003CA177 /* MapTasks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		DF695E4E1B5335CB003CA177 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DF695E501B53362F003CA177 /* GMapsDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GMapsDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		DF695E511B53362F003CA177 /* temp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = temp.m; sourceTree = "<group>"; };
+		DF695E571B537899003CA177 /* MapTasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTasks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			children = (
 				C06682581AC7D5A10064A6C0 /* AppDelegate.swift */,
 				C066825A1AC7D5A10064A6C0 /* ViewController.swift */,
+				DF695E571B537899003CA177 /* MapTasks.swift */,
 				C066825C1AC7D5A10064A6C0 /* Main.storyboard */,
 				C066825F1AC7D5A10064A6C0 /* Images.xcassets */,
 				C06682611AC7D5A10064A6C0 /* LaunchScreen.xib */,
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF695E521B53362F003CA177 /* temp.m in Sources */,
+				DF695E581B537899003CA177 /* MapTasks.swift in Sources */,
 				C066825B1AC7D5A10064A6C0 /* ViewController.swift in Sources */,
 				C06682591AC7D5A10064A6C0 /* AppDelegate.swift in Sources */,
 			);
