@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:GMapsDemo.xcodeproj">
+      location = "self:/Users/manabchetia/Documents/iOS Apps/GMapsDemo/GMapsDemo.xcodeproj">
    </FileRef>
 </Workspace>
