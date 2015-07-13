@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
 
     @IBOutlet weak var viewMap: GMSMapView!
@@ -47,6 +47,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        
+        viewMap.delegate = self
         
 
         
@@ -234,19 +236,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         destinationMarker.icon = GMSMarker.markerImageWithColor(UIColor.redColor())
         destinationMarker.title = self.mapTasks.destinationAddress
         
-//        
-//        if waypointsArray.count > 0 {
-//            for waypoint in waypointsArray {
-//                let lat: Double = (waypoint.componentsSeparatedByString(",")[0] as NSString).doubleValue
-//                let lng: Double = (waypoint.componentsSeparatedByString(",")[1] as NSString).doubleValue
-//                
-//                let marker = GMSMarker(position: CLLocationCoordinate2DMake(lat, lng))
-//                marker.map = viewMap
-//                marker.icon = GMSMarker.markerImageWithColor(UIColor.purpleColor())
-//                
-//                markersArray.append(marker)
-//            }
-//        }
+        
+        if waypointsArray.count > 0 {
+            for waypoint in waypointsArray {
+                let lat: Double = (waypoint.componentsSeparatedByString(",")[0] as NSString).doubleValue
+                let lng: Double = (waypoint.componentsSeparatedByString(",")[1] as NSString).doubleValue
+                
+                let marker = GMSMarker(position: CLLocationCoordinate2DMake(lat, lng))
+                marker.map = viewMap
+                marker.icon = GMSMarker.markerImageWithColor(UIColor.purpleColor())
+                
+                markersArray.append(marker)
+            }
+        }
     }
     
     func drawRoute() {
@@ -261,6 +263,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func displayRouteInfo() {
         lblInfo.text = mapTasks.totalDistance + "\n" + mapTasks.totalDuration
     }
+    
     
     func clearRoute() {
         originMarker.map = nil
@@ -280,7 +283,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    func recreateRoute() {
+        if let polyline = routePolyline {
+            clearRoute()
+            
+            mapTasks.getDirections(mapTasks.originAddress, destination: mapTasks.destinationAddress, waypoints: waypointsArray, travelMode: nil, completionHandler: { (status, success) -> Void in
+                
+                if success {
+                    self.configureMapAndMarkersForRoute()
+                    self.drawRoute()
+                    self.displayRouteInfo()
+                }
+                else {
+                    println(status)
+                }
+            })
+        }
+    }
     
+    
+    func mapView(mapView: GMSMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+        if let polyline = routePolyline {
+            let positionString = String(format: "%f", coordinate.latitude) + "," + String(format: "%f", coordinate.longitude)
+            waypointsArray.append(positionString)
+            
+            recreateRoute()
+        }
+    }
     
     
     

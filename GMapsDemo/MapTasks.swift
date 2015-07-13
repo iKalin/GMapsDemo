@@ -28,9 +28,6 @@ class MapTasks: NSObject {
     var totalDuration: String!
 
     
-    
-    
-    
     override init() {
         super.init()
     }
@@ -161,4 +158,5 @@ class MapTasks: NSObject {
         
         totalDuration = "Duration: \(days) d, \(remainingHours) h, \(remainingMins) mins, \(remainingSecs) secs"
     }
+    
 }
