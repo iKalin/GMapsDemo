@@ -10,9 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
 
+//    @IBOutlet weak var viewMap: UIView!
+    @IBOutlet weak var viewMap: GMSMapView!
+    
+    @IBOutlet weak var bbFindAddress: UIBarButtonItem!
+    
+    @IBOutlet weak var lblInfo: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let camera: GMSCameraPosition = GMSCameraPosition.cameraWithLatitude(48.857165, longitude: 2.354613, zoom: 8.0)
+        viewMap.camera = camera
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +31,27 @@ class ViewController: UIViewController {
     }
 
 
+    // MARK: IBAction method implementation
+    
+    @IBAction func changeMapType(sender: AnyObject) {
+        
+    }
+    
+    
+    @IBAction func findAddress(sender: AnyObject) {
+    
+    }
+    
+    
+    @IBAction func createRoute(sender: AnyObject) {
+    
+    }
+    
+    
+    @IBAction func changeTravelMode(sender: AnyObject) {
+    
+    }
+    
+    
 }
 
